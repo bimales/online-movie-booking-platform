@@ -1,0 +1,16 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: movie-catalog-service
+  profiles:
+    active: local
+  data:
+    mongodb:
+      uri: mongodb+srv://bimalesmandal:Kamales%402017@online-movie-ticket-boo.b2523.mongodb.net/online-movie-ticket-booking?retryWrites=true&w=majority&appName=online-movie-ticket-booking
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info

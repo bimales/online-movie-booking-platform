@@ -1,0 +1,19 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: booking-service
+  profiles:
+    active: local
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/booking-db
+    username: postgres
+    password: Kamales@2017
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
