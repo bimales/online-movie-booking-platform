@@ -14,4 +14,6 @@ public interface BookingRepository extends ReactiveCrudRepository<Booking, Strin
 
     @Query("SELECT * FROM bookings WHERE theatre_id = :theatreId AND show_time BETWEEN :start AND :end")
     Flux<Booking> findByTheatreIdAndShowTimeBetween(String theatreId, LocalDateTime start, LocalDateTime end);
+
+
 }

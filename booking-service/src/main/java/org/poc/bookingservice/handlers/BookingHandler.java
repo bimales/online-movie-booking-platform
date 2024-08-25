@@ -1,5 +1,6 @@
 package org.poc.bookingservice.handlers;
 
+import org.poc.bookingservice.dtos.BulkCancellation;
 import org.poc.bookingservice.entities.Booking;
 import org.poc.bookingservice.repositories.BookingRepository;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -74,4 +76,6 @@ public class BookingHandler {
         booking.setSeatNumbers(Stream.of(seatNumbersArray).collect(Collectors.joining(",")));
         return booking;
     }
+
+
 }
