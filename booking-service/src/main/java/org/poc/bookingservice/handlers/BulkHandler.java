@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class BulkHandler {
@@ -24,11 +26,16 @@ public class BulkHandler {
     public Mono<ServerResponse> bulkCancellation(ServerRequest request) {
         return request.bodyToMono(BulkCancellation.class)
                 .flatMap(bulkCancellation -> {
-                    return bookingRepository.deleteAllById(bulkCancellation.getListOfBookingIds());
-                })
-                .flatMap( e -> ServerResponse.ok().bodyValue("Bulk cancellation completed."))
-                .onErrorResume(e -> ServerResponse.status(500).bodyValue("Failed " + e.getMessage()));
+                    // Convert the list of String IDs to a list of UUIDs
+                    List<UUID> uuidList = bulkCancellation.getListOfBookingIds().stream()
+                            .map(UUID::fromString)  // Convert each String to UUID
+                            .collect(Collectors.toList());
 
+                    // Call deleteAllById with the converted list
+                    return bookingRepository.deleteAllById(uuidList);
+                })
+                .flatMap(e -> ServerResponse.ok().bodyValue("Bulk cancellation completed."))
+                .onErrorResume(e -> ServerResponse.status(500).bodyValue("Failed " + e.getMessage()));
     }
 
     public Mono<ServerResponse> bulkBooking(ServerRequest request) {

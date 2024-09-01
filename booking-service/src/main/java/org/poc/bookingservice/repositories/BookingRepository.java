@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public interface BookingRepository extends ReactiveCrudRepository<Booking, String> {
+public interface BookingRepository extends ReactiveCrudRepository<Booking, UUID> {
 
     Flux<Booking> findByUserId(String userId);
 
