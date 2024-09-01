@@ -27,8 +27,11 @@ public class BookingHandler {
         return request.bodyToMono(Booking.class)
                 .map(this::applyDiscounts)
                 .flatMap(booking -> {
-                    booking.setBookingId(UUID.randomUUID().toString());
+                   // booking.setBookingId(UUID.randomUUID());
                     booking.setBookingTime(LocalDateTime.now());
+                    booking.setCreatedAt(LocalDateTime.now());
+                    booking.setUpdatedAt(LocalDateTime.now());
+                    booking.setPaymentStatus("SUCCESS");
                     return bookingRepository.save(booking);
                 })
                 .flatMap(savedBooking -> ServerResponse.ok().bodyValue(savedBooking));
@@ -36,7 +39,7 @@ public class BookingHandler {
 
     public Mono<ServerResponse> getBookingById(ServerRequest request) {
         String id = request.pathVariable("id");
-        return bookingRepository.findById(id)
+        return bookingRepository.findById(UUID.fromString(id))
                 .flatMap(booking -> ServerResponse.ok().bodyValue(booking))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }

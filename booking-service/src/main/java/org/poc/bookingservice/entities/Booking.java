@@ -18,19 +18,22 @@ public class Booking {
 
     @Id
     @Column("booking_id")
-    private String bookingId;
+    private UUID bookingId;
 
     @Column("user_id")
-    private String userId;
+    private UUID userId;
 
     @Column("show_id")
-    private String showId;
+    private UUID showId;
 
     @Column("theatre_id")
-    private String theatreId;
+    private UUID theatreId;
+
+    @Column("screen_id")
+    private UUID screenId;
 
     @Column("movie_id")
-    private String movieId;
+    private UUID movieId;
 
     @Column("seat_numbers")
     private String seatNumbers; // Store seat numbers as comma-separated values
@@ -44,6 +47,15 @@ public class Booking {
     @Column("discount_applied")
     private boolean isDiscountApplied;
 
+    @Column("payment_status")
+    private String paymentStatus;
+
     @Column("booking_time")
     private LocalDateTime bookingTime;
+
+    @Column("created_at")
+    private LocalDateTime createdAt;
+
+    @Column("updated_at")
+    private LocalDateTime updatedAt;
 }
